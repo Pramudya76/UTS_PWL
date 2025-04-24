@@ -26,12 +26,12 @@ class DashboardController extends BaseController
         // Tampilkan view sesuai role
         if ($role === 'admin') {
             // Data khusus admin
-            $data['menu'] = ['Kelola User', 'Lihat Laporan', 'Pengaturan'];
+            $data['menu'] = ['Kelola User', 'Lihat Stok Barang'];
             $data['message'] = 'Selamat datang Admin!';
         } else {
             // Data khusus user biasa
-            $data['menu'] = ['Lihat Profil', 'Riwayat Aktivitas'];
-            $data['message'] = 'Selamat datang Pengguna!';
+            $data['menu'] = ['Lihat Profil', 'Memesan Barang', 'Melihat Riwayat Pesanan', 'Melihat Keranjang Pesanan'];
+            $data['message'] = 'Selamat datang User!';
         }
 
         return view('v_dashboard', $data);
