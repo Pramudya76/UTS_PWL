@@ -47,7 +47,7 @@ $password = [
                         }
                     ?>
 
-                    <?= form_open('login', 'class = "row g-3 needs-validation"') ?>
+                    <?= form_open('login', 'method="post" class="row g-3 needs-validation"') ?>
 
                     <div class="col-12">
                         <label for="yourUsername" class="form-label">Username</label>

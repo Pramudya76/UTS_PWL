@@ -14,22 +14,28 @@ class AuthController extends BaseController
 
     public function login()
     {
+        log_message('debug', 'REQUEST METHOD: ' . $this->request->getMethod());
+        log_message('debug', 'POST DATA: ' . print_r($this->request->getPost(), true));
+
         if ($this->request->getPost()) {
             $username = $this->request->getVar('username');
             $password = $this->request->getVar('password');
 
+            // Password hash untuk '123'
+            $hashedPassword = '$2y$10$/JuUA1dyfIcp1cO93vyF3OkcORZ5tMLWZSLCPLb5IU4e1.8GWml0e';
+
             $dataUser = [
                 [
-                    'username' => 'tama', 
-                    'password' => '202cb962ac59075b964b07152d234b70', 
+                    'username' => 'tama',
+                    'password' => $hashedPassword,
                     'role' => 'admin'
                 ],
                 [
-                    'username' => 'pramudya', 
-                    'password' => '202cb962ac59075b964b07152d234b70', 
+                    'username' => 'pramudya',
+                    'password' => $hashedPassword,
                     'role' => 'user'
                 ]
-            ]; // password = 123
+            ];
 
             $userFound = false;
 
@@ -37,22 +43,22 @@ class AuthController extends BaseController
                 if ($username === $user['username']) {
                     $userFound = true;
 
-                    if (md5($password) === $user['password']) {
+                    if (password_verify($password, $user['password'])) {
                         session()->set([
                             'username' => $user['username'],
                             'role' => $user['role'],
-                            'isLoggedIn' => TRUE
+                            'isLoggedIn' => true
                         ]);
                         return redirect()->to(base_url('/'));
                     } else {
-                        session()->setFlashdata('failed', 'Password Salah');
+                        session()->setFlashdata('failed', 'Password salah');
                         return redirect()->back();
                     }
                 }
             }
 
             if (!$userFound) {
-                session()->setFlashdata('failed', 'Username Tidak Ditemukan');
+                session()->setFlashdata('failed', 'Username tidak ditemukan');
                 return redirect()->back();
             }
         } else {
@@ -65,5 +71,4 @@ class AuthController extends BaseController
         session()->destroy();
         return redirect()->to('login');
     }
-
 }
