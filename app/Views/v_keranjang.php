@@ -1,4 +1,4 @@
 <?= $this->extend('layout') ?>
 <?= $this->section('content') ?>
-Ini halaman Keranjang
+Belum ada isinya
 <?= $this->endSection() ?>

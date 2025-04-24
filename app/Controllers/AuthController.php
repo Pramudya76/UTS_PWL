@@ -14,9 +14,6 @@ class AuthController extends BaseController
 
     public function login()
     {
-        log_message('debug', 'REQUEST METHOD: ' . $this->request->getMethod());
-        log_message('debug', 'POST DATA: ' . print_r($this->request->getPost(), true));
-
         if ($this->request->getPost()) {
             $username = $this->request->getVar('username');
             $password = $this->request->getVar('password');

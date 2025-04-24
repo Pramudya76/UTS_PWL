@@ -10,11 +10,60 @@ class Home extends BaseController
     }
 
     public function stokBarang() {
-        return view('v_stokBarang');
+        $data['barang'] = [
+            [
+                'nama' => 'Beras 1 kg',
+                'kategori' => 'Sembako',
+                'stok' => 120,
+                'harga' => 15000,
+                'tanggal_masuk' => '2025-04-20'
+            ],
+            [
+                'nama' => 'Gula Pasir 1kg',
+                'kategori' => 'Sembako',
+                'stok' => 80,
+                'harga' => 14000,
+                'tanggal_masuk' => '2025-04-19'
+            ],
+            [
+                'nama' => 'Minyak Goreng 1L',
+                'kategori' => 'Sembako',
+                'stok' => 60,
+                'harga' => 18500,
+                'tanggal_masuk' => '2025-04-22'
+            ],
+            [
+                'nama' => 'Indomie Goreng',
+                'kategori' => 'Makanan Instan',
+                'stok' => 200,
+                'harga' => 3500,
+                'tanggal_masuk' => '2025-04-21'
+            ],
+            [
+                'nama' => 'Kopi Kapal Api 65gr',
+                'kategori' => 'Minuman',
+                'stok' => 95,
+                'harga' => 2800,
+                'tanggal_masuk' => '2025-04-23'
+            ]
+        ];
+
+        return view('v_stokBarang', $data);
     }
 
     public function pelanggan() {
-        return view('v_pelanggan');
+        $dataUser['dataUser'] = [
+            [
+                'username' => 'tama',
+                'role' => 'admin'
+            ],
+            [
+                'username' => 'pramudya',
+                'role' => 'user'
+            ]
+        ];
+
+        return view('v_pelanggan', $dataUser);
     }
 
     public function kelolaBarang() {
@@ -26,7 +75,45 @@ class Home extends BaseController
     }
 
     public function produk() {
-        return view('v_produk');
+        $data['barang'] = [
+            [
+                'nama' => 'Beras 1 kg',
+                'kategori' => 'Sembako',
+                'stok' => 120,
+                'harga' => 15000,
+                'tanggal_masuk' => '2025-04-20'
+            ],
+            [
+                'nama' => 'Gula Pasir 1kg',
+                'kategori' => 'Sembako',
+                'stok' => 80,
+                'harga' => 14000,
+                'tanggal_masuk' => '2025-04-19'
+            ],
+            [
+                'nama' => 'Minyak Goreng 1L',
+                'kategori' => 'Sembako',
+                'stok' => 60,
+                'harga' => 18500,
+                'tanggal_masuk' => '2025-04-22'
+            ],
+            [
+                'nama' => 'Indomie Goreng',
+                'kategori' => 'Makanan Instan',
+                'stok' => 200,
+                'harga' => 3500,
+                'tanggal_masuk' => '2025-04-21'
+            ],
+            [
+                'nama' => 'Kopi Kapal Api 65gr',
+                'kategori' => 'Minuman',
+                'stok' => 95,
+                'harga' => 2800,
+                'tanggal_masuk' => '2025-04-23'
+            ]
+        ];
+
+        return view('v_produk', $data);
     }
 
     public function keranjang() {
@@ -36,6 +123,8 @@ class Home extends BaseController
     public function riwayatBelanja() {
         return view('v_riwayatBelanja');
     }
+
+    
 
 
 }
