@@ -30,7 +30,7 @@
         </li><!-- End Produk Nav -->
         
         <?php
-        if (session()->get('role') == 'user') {
+        if (session()->get('role') == 'guest') {
         ?>
             <li class="nav-item">
                 <a class="nav-link <?php echo (uri_string() == 'keranjang') ? "" : "collapsed" ?>" href="keranjang">
@@ -69,7 +69,7 @@
         ?>
 
         <?php
-        if (session()->get('role') == 'user') {
+        if (session()->get('role') == 'guest') {
         ?>
             <li class="nav-item">
                 <a class="nav-link <?php echo (uri_string() == 'riwayatBelanja') ? "" : "collapsed" ?>" href="riwayatBelanja">

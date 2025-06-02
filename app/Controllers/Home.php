@@ -10,6 +10,8 @@ class Home extends BaseController
 
     function __construct()
     {
+        helper('form');
+        helper('number');
         $this->product = new ProductModel();
     }
 
@@ -64,17 +66,6 @@ class Home extends BaseController
     }
 
     public function pelanggan() {
-        $dataUser['dataUser'] = [
-            [
-                'username' => 'tama',
-                'role' => 'admin'
-            ],
-            [
-                'username' => 'pramudya',
-                'role' => 'user'
-            ]
-        ];
-
         return view('v_pelanggan', $dataUser);
     }
 
