@@ -21,14 +21,20 @@
         <?php
         }
         ?>
+        <?php
+        if (session()->get('role') == 'admin') {
+        ?>
+            <li class="nav-item">
+                <a class="nav-link <?php echo (uri_string() == 'produk') ? "" : "collapsed" ?>" href="produk">
+                    <i class="bi bi-box-seam"></i>
+                    <span>Produk</span>
+                </a>
+            </li><!-- End Produk Nav -->
+        <?php
+        }
+        ?>
 
-        <li class="nav-item">
-            <a class="nav-link <?php echo (uri_string() == 'produk') ? "" : "collapsed" ?>" href="produk">
-                <i class="bi bi-box-seam"></i>
-                <span>Produk</span>
-            </a>
-        </li><!-- End Produk Nav -->
-        
+
         <?php
         if (session()->get('role') == 'guest') {
         ?>
