@@ -78,9 +78,9 @@
         if (session()->get('role') == 'guest') {
         ?>
             <li class="nav-item">
-                <a class="nav-link <?php echo (uri_string() == 'riwayatBelanja') ? "" : "collapsed" ?>" href="riwayatBelanja">
+                <a class="nav-link <?php echo (uri_string() == 'checkout') ? "" : "collapsed" ?>" href="checkout">
                     <i class="bi bi-bag"></i>
-                    <span>Riwayat Pembelian</span>
+                    <span>Checkout</span>
                 </a>
             </li><!-- End Produk Nav -->
         <?php

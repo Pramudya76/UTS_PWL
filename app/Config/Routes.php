@@ -33,6 +33,12 @@ $routes->group('keranjang', ['filter' => 'auth'], function ($routes) {
     $routes->get('clear', 'TransaksiController::cart_clear');
 });
 
+$routes->get('checkout', 'TransaksiController::checkout', ['filter' => 'auth']);
+$routes->post('buy', 'TransaksiController::buy', ['filter' => 'auth']);
+
+$routes->get('get-location', 'TransaksiController::getLocation', ['filter' => 'auth']);
+$routes->get('get-cost', 'TransaksiController::getCost', ['filter' => 'auth']);
+
 $routes->get('stokBarang', 'Home::stokBarang', ['filter' => 'auth']);
 $routes->get('pelanggan', 'Home::pelanggan', ['filter' => 'auth']);
 $routes->get('kelolaBarang', 'Home::kelolaBarang', ['filter' => 'auth']);

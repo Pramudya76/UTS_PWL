@@ -127,7 +127,9 @@ class Home extends BaseController
         return view('v_riwayatBelanja');
     }
 
-    
+    public function checkout() {
+        return view('v_checkout');
+    }
 
 
 }
