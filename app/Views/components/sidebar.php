@@ -33,13 +33,18 @@
         <?php
         }
         ?>
-        
+        <?php
+        if (session()->get('role') == 'guest') {
+        ?>
         <li class="nav-item">
             <a class="nav-link <?php echo (uri_string() == 'profile') ? "" : "collapsed" ?>" href="profile">
                 <i class="bi bi-person"></i>
                 <span>Profile</span>
             </a>
         </li><!-- End Profile Nav -->
+        <?php
+        }
+        ?>
         
         <?php
         if (session()->get('role') == 'guest') {
@@ -55,7 +60,7 @@
         ?>
 
         <?php
-        if (session()->get('role') == 'admin') {
+        if (session()->get('role') == 'cannot') {
         ?>
             <li class="nav-item">
                 <a class="nav-link <?php echo (uri_string() == 'pelanggan') ? "" : "collapsed" ?>" href="pelanggan">
@@ -68,14 +73,14 @@
         ?>
         
         <?php
-        if (session()->get('role') == 'admin') {
+        if (session()->get('role') == 'cannot') {
         ?>
             <li class="nav-item">
                 <a class="nav-link <?php echo (uri_string() == 'stokBarang') ? "" : "collapsed" ?>" href="stokBarang">
                     <i class="bi bi-clipboard-data"></i>
                     <span>Stok Barang</span>
                 </a>
-            </li><!-- End Produk Nav -->
+            </li>
         <?php
         }
         ?>
