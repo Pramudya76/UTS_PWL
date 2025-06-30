@@ -5,12 +5,14 @@ namespace App\Controllers;
 use App\Models\ProductModel; 
 use App\Models\TransactionModel; 
 use App\Models\TransactionDetailModel; 
+use App\Models\UserModel;
 
 class Home extends BaseController
 {
     protected $product;
     protected $transaction;
     protected $transaction_detail;
+    protected $userModel;
 
     function __construct()
     {
@@ -19,6 +21,7 @@ class Home extends BaseController
         $this->product = new ProductModel();
         $this->transaction = new TransactionModel();
         $this->transaction_detail = new TransactionDetailModel();
+        $this->userModel = new UserModel();
     }
 
 
@@ -29,109 +32,21 @@ class Home extends BaseController
         return view('v_home', $data);
     }
 
-    public function stokBarang() {
-        $data['barang'] = [
-            [
-                'nama' => 'Beras 1 kg',
-                'kategori' => 'Sembako',
-                'stok' => 120,
-                'harga' => 15000,
-                'tanggal_masuk' => '2025-04-20'
-            ],
-            [
-                'nama' => 'Gula Pasir 1kg',
-                'kategori' => 'Sembako',
-                'stok' => 80,
-                'harga' => 14000,
-                'tanggal_masuk' => '2025-04-19'
-            ],
-            [
-                'nama' => 'Minyak Goreng 1L',
-                'kategori' => 'Sembako',
-                'stok' => 60,
-                'harga' => 18500,
-                'tanggal_masuk' => '2025-04-22'
-            ],
-            [
-                'nama' => 'Indomie Goreng',
-                'kategori' => 'Makanan Instan',
-                'stok' => 200,
-                'harga' => 3500,
-                'tanggal_masuk' => '2025-04-21'
-            ],
-            [
-                'nama' => 'Kopi Kapal Api 65gr',
-                'kategori' => 'Minuman',
-                'stok' => 95,
-                'harga' => 2800,
-                'tanggal_masuk' => '2025-04-23'
-            ]
-        ];
-
-        return view('v_stokBarang', $data);
-    }
+    
 
     public function pelanggan() {
-        return view('v_pelanggan', $dataUser);
+        $data['users'] = $this->userModel->findAll();
+        return view('v_pelanggan', $data);
     }
 
-    public function kelolaBarang() {
-        return view('v_kelolaBarang');
+    public function dataTransaksi()
+    {
+        $model = new \App\Models\TransactionModel();
+        $transaksi = $model->findAll(); 
+
+        return view('v_DataTransaksi', ['transaksi' => $transaksi]);
     }
 
-    public function dashboard() {
-        return view('v_dashboard');
-    }
-
-    public function produk() {
-        $data['barang'] = [
-            [
-                'nama' => 'Beras 1 kg',
-                'kategori' => 'Sembako',
-                'stok' => 120,
-                'harga' => 15000,
-                'tanggal_masuk' => '2025-04-20'
-            ],
-            [
-                'nama' => 'Gula Pasir 1kg',
-                'kategori' => 'Sembako',
-                'stok' => 80,
-                'harga' => 14000,
-                'tanggal_masuk' => '2025-04-19'
-            ],
-            [
-                'nama' => 'Minyak Goreng 1L',
-                'kategori' => 'Sembako',
-                'stok' => 60,
-                'harga' => 18500,
-                'tanggal_masuk' => '2025-04-22'
-            ],
-            [
-                'nama' => 'Indomie Goreng',
-                'kategori' => 'Makanan Instan',
-                'stok' => 200,
-                'harga' => 3500,
-                'tanggal_masuk' => '2025-04-21'
-            ],
-            [
-                'nama' => 'Kopi Kapal Api 65gr',
-                'kategori' => 'Minuman',
-                'stok' => 95,
-                'harga' => 2800,
-                'tanggal_masuk' => '2025-04-23'
-            ]
-        ];
-
-        return view('v_produk', $data);
-    }
-
-    public function keranjang() {
-        return view('v_keranjang');
-    }
-
-    public function riwayatBelanja() {
-        return view('v_riwayatBelanja');
-    }
 
     public function checkout() {
         return view('v_checkout');

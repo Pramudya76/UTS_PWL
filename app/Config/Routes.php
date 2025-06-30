@@ -11,11 +11,6 @@ $routes->get('login', 'AuthController::login');
 $routes->post('login', 'AuthController::login');
 $routes->get('logout', 'AuthController::logout');
 
-// $routes->get('produk', 'Home::produk', ['filter' => 'auth']);
-// $routes->post('produk', 'ProdukController::create', ['filter' => 'auth']);
-// $routes->post('produk/edit/(:any)', 'ProdukController::edit/$1', ['filter' => 'auth']);
-// $routes->get('produk/delete/(:any)', 'ProdukController::delete/$1', ['filter' => 'auth']);
-
 $routes->group('produk', ['filter' => 'auth'], function ($routes) { 
     $routes->get('', 'ProdukController::index');
     $routes->post('', 'ProdukController::create');
@@ -41,10 +36,9 @@ $routes->get('get-cost', 'TransaksiController::getCost', ['filter' => 'auth']);
 
 $routes->get('profile', 'Home::profile', ['filter' => 'auth']);
 $routes->resource('api', ['controller' => 'apiController']);
-
-$routes->get('stokBarang', 'Home::stokBarang', ['filter' => 'auth']);
 $routes->get('pelanggan', 'Home::pelanggan', ['filter' => 'auth']);
-$routes->get('kelolaBarang', 'Home::kelolaBarang', ['filter' => 'auth']);
 $routes->get('dashboard', 'DashboardController::index', ['filter' => 'auth']);
-$routes->get('riwayatBelanja', 'Home::riwayatBelanja', ['filter' => 'auth']);
+
+$routes->get('dataTransaksi', 'Home::dataTransaksi', ['filter' => 'auth']);
+
 

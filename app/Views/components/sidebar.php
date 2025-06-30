@@ -60,7 +60,7 @@
         ?>
 
         <?php
-        if (session()->get('role') == 'cannot') {
+        if (session()->get('role') == 'admin') {
         ?>
             <li class="nav-item">
                 <a class="nav-link <?php echo (uri_string() == 'pelanggan') ? "" : "collapsed" ?>" href="pelanggan">
@@ -73,14 +73,14 @@
         ?>
         
         <?php
-        if (session()->get('role') == 'cannot') {
+        if (session()->get('role') == 'admin') {
         ?>
             <li class="nav-item">
-                <a class="nav-link <?php echo (uri_string() == 'stokBarang') ? "" : "collapsed" ?>" href="stokBarang">
-                    <i class="bi bi-clipboard-data"></i>
-                    <span>Stok Barang</span>
+                <a class="nav-link <?php echo (uri_string() == 'dataTransaksi') ? "" : "collapsed" ?>" href="dataTransaksi">
+                    <i class="bi bi-people"></i>
+                    <span>Transaksi Users</span>
                 </a>
-            </li>
+            </li><!-- End Produk Nav -->
         <?php
         }
         ?>
