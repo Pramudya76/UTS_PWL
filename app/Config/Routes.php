@@ -9,6 +9,10 @@ $routes->get('/', 'Home::index', ['filter' => 'auth']);
 
 $routes->get('login', 'AuthController::login');
 $routes->post('login', 'AuthController::login');
+
+$routes->get('register', 'AuthController::register');
+$routes->post('register', 'AuthController::register');
+
 $routes->get('logout', 'AuthController::logout');
 
 $routes->group('produk', ['filter' => 'auth'], function ($routes) { 
@@ -41,4 +45,8 @@ $routes->get('dashboard', 'DashboardController::index', ['filter' => 'auth']);
 
 $routes->get('dataTransaksi', 'Home::dataTransaksi', ['filter' => 'auth']);
 
+//$routes->get('usersProfile', 'Home::usersProfile', ['filter' => 'auth']);
+
+$routes->get('usersProfile', 'UserController::profile', ['filter' => 'auth']);
+$routes->post('usersProfile/update/(:num)', 'UserController::update/$1', ['filter' => 'auth']);
 

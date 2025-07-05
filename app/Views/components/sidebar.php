@@ -2,13 +2,19 @@
 <aside id="sidebar" class="sidebar">
 
     <ul class="sidebar-nav" id="sidebar-nav">
+        <?php
+        if (session()->get('role') == 'guest') {
+        ?>
         <li class="nav-item">
             <a class="nav-link <?php echo (uri_string() == '') ? "" : "collapsed" ?>" href="/">
                 <i class="bi bi-grid"></i>
                 <span>Home</span>
             </a>
         </li><!-- End Home Nav -->
-
+        <?php
+        }
+        ?>
+        
         <?php
         if (session()->get('role') == 'admin') {
         ?>

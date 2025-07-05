@@ -77,5 +77,9 @@ class Home extends BaseController
         return view('v_profile', $data);
     }
 
+    public function usersProfile() {
+        return view('users-profile.php');
+    }
+
 
 }

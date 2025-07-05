@@ -33,6 +33,7 @@ class AuthController extends BaseController
                 if ($dataUser) {
                     if (password_verify($password, $dataUser['password'])) {
                         session()->set([
+                            'user_id'  => $dataUser['id'],  // Tambahkan ini
                             'username' => $dataUser['username'],
                             'role' => $dataUser['role'],
                             'isLoggedIn' => TRUE
@@ -61,4 +62,44 @@ class AuthController extends BaseController
         session()->destroy();
         return redirect()->to('login');
     }
+
+    public function register()
+    {
+        if ($this->request->getPost()) {
+            $rules = [
+                'username' => 'required|min_length[6]|is_unique[user.username]',
+                'email'    => 'required|valid_email|is_unique[user.email]',
+                'password' => 'required|min_length[7]',
+                'confirm_password' => 'required|matches[password]',
+            ];
+
+            if ($this->validate($rules)) {
+
+                $username = $this->request->getVar('username');
+                $email    = $this->request->getVar('email');
+                $password = $this->request->getVar('password');
+
+                $data = [
+                    'username' => $username,
+                    'email'    => $email,
+                    'password' => password_hash($password, PASSWORD_DEFAULT),
+                    'role'     => 'guest'
+                ];
+
+                $this->user->insert($data);
+
+                session()->setFlashdata('success', 'Akun berhasil didaftarkan, silakan login.');
+                return redirect()->to('login');
+            } else {
+                session()->setFlashdata('failed', $this->validator->listErrors());
+                return redirect()->back();
+            }
+        }
+
+        return view('v_register'); 
+    }
+
+
+
+
 }

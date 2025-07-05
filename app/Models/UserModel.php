@@ -6,9 +6,10 @@ use CodeIgniter\Model;
 
 class UserModel extends Model
 {
-    protected $table = 'user';
+    protected $table      = 'user';
     protected $primaryKey = 'id';
-    protected $allowedFields = [
-        'username', 'email', 'password', 'role', 'created_at', 'updated_at'
-    ];
+    protected $allowedFields = ['username', 'email', 'password', 'role', 'created_at', 'updated_at']; // tambahkan created_at dan updated_at
+    protected $useTimestamps = true;
+    protected $createdField  = 'created_at';
+    protected $updatedField  = 'updated_at';
 }
