@@ -13,7 +13,7 @@ class AuthController extends BaseController
     public function __construct()
     {
         helper('form');
-        $this->user = new UserModel(); // inisialisasi model
+        $this->user = new UserModel(); 
     }
 
     public function login()
@@ -28,12 +28,12 @@ class AuthController extends BaseController
                 $username = $this->request->getVar('username');
                 $password = $this->request->getVar('password');
 
-                $dataUser = $this->user->where(['username' => $username])->first(); //pasw 1234567
+                $dataUser = $this->user->where(['username' => $username])->first(); 
 
                 if ($dataUser) {
                     if (password_verify($password, $dataUser['password'])) {
                         session()->set([
-                            'user_id'  => $dataUser['id'],  // Tambahkan ini
+                            'user_id'  => $dataUser['id'],  
                             'username' => $dataUser['username'],
                             'role' => $dataUser['role'],
                             'isLoggedIn' => TRUE

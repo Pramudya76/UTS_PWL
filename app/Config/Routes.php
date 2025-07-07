@@ -45,8 +45,6 @@ $routes->get('dashboard', 'DashboardController::index', ['filter' => 'auth']);
 
 $routes->get('dataTransaksi', 'Home::dataTransaksi', ['filter' => 'auth']);
 
-//$routes->get('usersProfile', 'Home::usersProfile', ['filter' => 'auth']);
-
 $routes->get('usersProfile', 'UserController::profile', ['filter' => 'auth']);
 $routes->post('usersProfile/update/(:num)', 'UserController::update/$1', ['filter' => 'auth']);
 
