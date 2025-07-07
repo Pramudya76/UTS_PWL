@@ -34,6 +34,8 @@ $routes->group('keranjang', ['filter' => 'auth'], function ($routes) {
 
 $routes->get('checkout', 'TransaksiController::checkout', ['filter' => 'auth']);
 $routes->post('buy', 'TransaksiController::buy', ['filter' => 'auth']);
+$routes->get('transaksi/selesaikan/(:num)', 'TransaksiController::selesaikan/$1', ['filter' => 'auth']);
+$routes->get('transaksi/batalkan/(:num)', 'TransaksiController::batalkan/$1');
 
 $routes->get('get-location', 'TransaksiController::getLocation', ['filter' => 'auth']);
 $routes->get('get-cost', 'TransaksiController::getCost', ['filter' => 'auth']);
@@ -47,4 +49,6 @@ $routes->get('dataTransaksi', 'Home::dataTransaksi', ['filter' => 'auth']);
 
 $routes->get('usersProfile', 'UserController::profile', ['filter' => 'auth']);
 $routes->post('usersProfile/update/(:num)', 'UserController::update/$1', ['filter' => 'auth']);
+
+$routes->get('chart', 'TransaksiController::chart');
 

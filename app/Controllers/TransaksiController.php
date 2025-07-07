@@ -150,10 +150,12 @@ class TransaksiController extends BaseController
             ];
 
             $this->transaction->insert($dataForm);
-
             $last_insert_id = $this->transaction->getInsertID();
 
+            $produkModel = new \App\Models\ProductModel(); // Pastikan sudah ada model ini
+
             foreach ($this->cart->contents() as $value) {
+                // Simpan detail transaksi
                 $dataFormDetail = [
                     'transaction_id' => $last_insert_id,
                     'product_id' => $value['id'],
@@ -163,14 +165,120 @@ class TransaksiController extends BaseController
                     'created_at' => date("Y-m-d H:i:s"),
                     'updated_at' => date("Y-m-d H:i:s")
                 ];
-
                 $this->transaction_detail->insert($dataFormDetail);
+
+                // Kurangi jumlah produk di database
+                $produk = $produkModel->find($value['id']);
+                if ($produk && $produk['jumlah'] >= $value['qty']) {
+                    $produkModel->update($value['id'], [
+                        'jumlah' => $produk['jumlah'] - $value['qty']
+                    ]);
+                } else {
+                    // Stok tidak cukup (opsional: batalkan pembelian jika perlu)
+                    session()->setFlashdata('error', 'Stok produk "' . $value['name'] . '" tidak mencukupi.');
+                    return redirect()->to(base_url('keranjang'));
+                }
             }
 
             $this->cart->destroy();
-    
-            return redirect()->to(base_url());
+
+            return redirect()->to(base_url())->with('success', 'Transaksi berhasil dilakukan.');
         }
     }
+
+
+    public function chart()
+    {
+        $model = new \App\Models\TransactionModel();
+
+        // Ambil total transaksi per tanggal berdasarkan status
+        $results = $model->select("DATE(created_at) as tanggal, status, SUM(total_harga) as total")
+            ->groupBy('tanggal, status')
+            ->orderBy('tanggal', 'ASC')
+            ->findAll();
+
+        $dataChart = [];
+        foreach ($results as $row) {
+            $tanggal = $row['tanggal'];
+            $status = $row['status'];
+
+            if (!isset($dataChart[$status])) {
+                $dataChart[$status] = [];
+            }
+
+            $dataChart[$status][$tanggal] = (int) $row['total'];
+        }
+
+        // Ambil semua tanggal unik
+        $labels = [];
+        foreach ($results as $row) {
+            $labels[] = $row['tanggal'];
+        }
+        $labels = array_unique($labels);
+        sort($labels);
+
+        // Siapkan series per status
+        $statusLabels = [
+            0 => 'Belum Selesai',
+            1 => 'Sudah Selesai',
+            2 => 'Dibatalkan'
+        ];
+
+        $series = [];
+        foreach ($dataChart as $status => $values) {
+            $dataPerTanggal = [];
+            foreach ($labels as $tanggal) {
+                $dataPerTanggal[] = $values[$tanggal] ?? 0;
+            }
+            $series[] = [
+                'name' => $statusLabels[$status] ?? 'Status Tidak Diketahui',
+                'data' => $dataPerTanggal
+            ];
+        }
+
+        return view('chartMenu', [
+            'labels' => json_encode($labels),
+            'series' => json_encode($series)
+        ]);
+    }
+
+
+    public function selesaikan($id)
+    {
+        $this->transaction->update($id, [
+            'status' => 1,
+            'updated_at' => date("Y-m-d H:i:s")
+        ]);
+
+        session()->setFlashdata('success', 'Transaksi berhasil diselesaikan.');
+        return redirect()->back();
+    }
+
+    public function batalkan($id)
+    {
+        // Ambil semua detail produk dari transaksi
+        $detailModel = new \App\Models\TransactionDetailModel();
+        $produkModel = new \App\Models\ProductModel();
+
+        $detailTransaksi = $detailModel->where('transaction_id', $id)->findAll();
+
+        // Kembalikan jumlah stok
+        foreach ($detailTransaksi as $item) {
+            $produk = $produkModel->find($item['product_id']);
+            if ($produk) {
+                $produkModel->update($item['product_id'], [
+                    'jumlah' => $produk['jumlah'] + $item['jumlah']
+                ]);
+            }
+        }
+
+        // Update status transaksi menjadi "dibatalkan"
+        $this->transaction->update($id, ['status' => 2]);
+
+        return redirect()->to(base_url('profile'))->with('success', 'Transaksi telah dibatalkan dan stok telah dikembalikan.');
+    }
+
+
+
 
 }

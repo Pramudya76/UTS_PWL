@@ -30,7 +30,17 @@
                     <td><?= esc($item['alamat']) ?></td>
                     <td><?= number_format($item['total_harga'], 0, ',', '.') ?></td>
                     <td><?= number_format($item['ongkir'], 0, ',', '.') ?></td>
-                    <td><?= ucfirst(esc($item['status'])) ?></td>
+                    <td>
+                        <?php
+                            if ($item['status'] == 1) {
+                                echo '<span class="badge bg-success">Sudah Selesai</span>';
+                            } elseif ($item['status'] == 2) {
+                                echo '<span class="badge bg-danger">Dibatalkan</span>';
+                            } else {
+                                echo '<span class="badge bg-warning text-dark">Belum Selesai</span>';
+                            }
+                        ?>
+                    </td>
                     <td><?= date('d-m-Y H:i', strtotime($item['created_at'])) ?></td>
                 </tr>
             <?php endforeach; ?>

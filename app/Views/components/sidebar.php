@@ -92,6 +92,19 @@
         ?>
 
         <?php
+        if (session()->get('role') == 'admin') {
+        ?>
+            <li class="nav-item">
+                <a class="nav-link <?php echo (uri_string() == 'chart') ? "" : "collapsed" ?>" href="chart">
+                    <i class="bi bi-people"></i>
+                    <span>Chart Transaksi</span>
+                </a>
+            </li><!-- End Produk Nav -->
+        <?php
+        }
+        ?>
+
+        <?php
         if (session()->get('role') == 'guest') {
         ?>
             <li class="nav-item">

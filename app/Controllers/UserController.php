@@ -48,4 +48,10 @@ class UserController extends BaseController
         return redirect()->to(base_url('usersProfile'));
     }
 
+    public function chartMenu()
+    {
+        return view('chartMenu');
+    }
+
+
 }
